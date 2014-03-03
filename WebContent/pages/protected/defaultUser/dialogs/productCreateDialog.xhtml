@@ -1,0 +1,47 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+<h:body>
+	<p:dialog widgetVar="productCreateDialogWidget"
+		id="productCreateDialogId" height="auto" width="500" modal="false"
+		closable="true" draggable="false" resizable="false">
+		<f:facet name="header">#{bundle.create} #{bundle.product_new}</f:facet>
+		<h:form id="productCreateDialogForm" prependId="false">
+			<h:panelGrid columns="2">
+				<h:outputText value="* #{bundle.productNumber}" />
+				<p:autoComplete forceSelection="true" minQueryLength="3" value="#{productMB.product.product_infos}" 
+				label="#{bundle.productNumber}" required="true" var="product_infos"
+				itemLabel="#{product_infos.item_number}" itemValue="#{product_infos}" 
+				completeMethod="#{productMB.completeProduct_infos}" dropdown="true" />
+				
+				<h:outputText value="* #{bundle.productDeliveryNotes}" />
+				<p:autoComplete forceSelection="true" minQueryLength="3" value="#{productMB.product.delivery_notes}" 
+				label="#{bundle.productDeliveryNotes}" required="true" var="delivery_notes"
+				itemLabel="#{delivery_notes.delivery_notes_name}" itemValue="#{delivery_notes}" 
+				completeMethod="#{productMB.completeDelivery_Notes}" dropdown="false" />
+				
+				
+				
+				
+				<h:outputText value="* #{bundle.productSerial}" />
+				<h:inputText value="#{productMB.product.serial}" required="true" label="#{bundle.productSerial}" />
+				
+				<h:outputText value="* #{bundle.productDateCode}" />
+				<h:inputText value="#{productMB.product.manufacturing_Date}" required="true" label="#{bundle.productDateCode}" />
+				
+		
+				<p:commandButton value="#{bundle.create}" icon="ui-icon-plus"
+					action="#{productMB.createProduct()}"
+					update=":messageGrowl :productsForm:productsTable"
+					oncomplete="closeDialogIfSucess(xhr, status, args, productCreateDialogWidget, 'productCreateDialogId')" />
+					
+				<p:commandButton value="#{bundle.cancel}" icon="ui-icon-cancel" actionListener="#{productMB.resetProduct()}"
+					onclick="productCreateDialogWidget.hide();" type="button" />
+			</h:panelGrid>
+		</h:form>
+	</p:dialog>
+</h:body>
+</html>

@@ -1,0 +1,67 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+<h:body>
+	<h:outputStylesheet name="css/default.css" />
+	<ui:composition>
+		<p:ajaxStatus onstart="PF('statusDialog').show();"
+			onsuccess="PF('statusDialog').hide();" />
+		<h:outputStylesheet name="/css/style.css" />
+		<p:dialog modal="true" widgetVar="statusDialog" header="Loading"
+			draggable="false" closable="false" styleClass="disable-scroll">
+			<p:graphicImage value="/resources/img/ajax-loader.gif" />
+		</p:dialog>
+		<!--  äußere Elemente werden entfernt -->
+		<h:outputStylesheet name="/css/style.css" />
+		<h:outputStylesheet name="css/default.css" />
+		<h:form>
+			<p:growl id="messages" />
+
+			<p:panel styleClass="titlepanel">
+
+
+				<p:graphicImage id="logo_eternium"
+					value="/resources/img/logo_eternium.png" width="100" />
+
+
+				<p:button value="#{bundle.loginWelcomeMessage}: #{userMB.user.name}"
+					icon="ui-icon-star" />
+				<a style="text-align: right"> <p:commandButton
+						value="#{bundle.logOut}" action="#{userMB.logOut()}" ajax="false"
+						style="font-size: 10px;" />
+				</a>
+
+
+			</p:panel>
+
+			<p:tabMenu activeIndex="0">
+
+
+				<p:menuitem value="Home" action="#{menuMB.setSelectedOption(0)}"
+					update="allLayout" ajax="false" />
+
+				<p:menuitem value="Products" action="#{menuMB.setSelectedOption(1)}"
+					update="allLayout" ajax="false" />
+				<p:menuitem value="On Loc" action="#{menuMB.setSelectedOption(2)}"
+					update="allLayout" ajax="false" />
+				<p:menuitem value="Deliveries"
+					action="#{menuMB.setSelectedOption(3)}" update="allLayout"
+					ajax="false" />
+				<p:menuitem value="Products Infos"
+					action="#{menuMB.setSelectedOption(4)}" update="allLayout"
+					ajax="false" />
+				
+
+
+			</p:tabMenu>
+
+		</h:form>
+	</ui:composition>
+</h:body>
+
+</html>

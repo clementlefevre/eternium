@@ -1,0 +1,79 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+<h:body>
+	<p:dialog widgetVar="deliveryCreateDialogWidget"
+		id="deliveryCreateDialogId" height="auto" width="auto" modal="false"
+		closable="true" draggable="false" resizable="false">
+			<f:facet name="header">#{bundle.create} #{bundle.delivery_new}</f:facet>
+		<h:form id="deliveryCreateDialogForm" prependId="false">
+			<h:panelGrid columns="2">
+				<h:outputText value="* #{bundle.delivery_notes_name}" />
+				<h:inputText
+					value="#{deliveryMB.delivery_notes.delivery_notes_name}"
+					required="true" label="#{bundle.delivery_notes_name}" />
+
+				<h:outputText value="* #{bundle.delivery_notes_date}" />
+				<p:inplace id="ajaxInplaceCreateDeliveryDetail_entryDate"
+					editor="true" required="true">
+
+					<p:calendar effect="slideDown" id="createentrydate"
+						value="#{deliveryMB.delivery_notes.delivery_date}"
+						maxdate="#{deliveryMB.today}" locale="fr" timeStyle="short"
+						pattern="dd/MM/yyyy" size="10" dateStyle="short">
+						<f:convertDateTime pattern="dd/MM/yyyy" dateStyle="short" />
+
+					</p:calendar>
+				</p:inplace>
+				<h:outputText value="* #{bundle.delivery_notes_supplier}" />
+
+				<p:selectOneMenu id="create_supplier_product_infos"
+					value="#{deliveryMB.delivery_notes.supplier_list}"
+					converter="supplier_listConverter" style="text-align:center">
+
+					<f:selectItems value="#{deliveryMB.completeSupplier_list}"
+						var="liste" itemValue="#{liste}"
+						itemLabel="#{liste.supplier_name}" />
+
+				</p:selectOneMenu>
+				<h:outputText value="* #{bundle.delivery_notes_project}" />
+
+
+
+				<p:selectOneMenu id="create_project_delivery"
+					value="#{deliveryMB.delivery_notes.projects}"
+					converter="projectsConverter" style="text-align:center">
+
+					<f:selectItems value="#{deliveryMB.completeProjects}" var="liste"
+						itemValue="#{liste}" itemLabel="#{liste.project_name}" />
+
+				</p:selectOneMenu>
+				
+				
+				<h:outputText value="* #{bundle.delivery_notes_adress}" />
+				<p:selectOneMenu id="create_adress_delivery"
+					value="#{deliveryMB.delivery_notes.delivery_list}"
+					converter="delivery_listConverter" style="text-align:center">
+
+					<f:selectItems value="#{deliveryMB.completeDelivery_list}" var="liste"
+						itemValue="#{liste}" itemLabel="#{liste.delivery_adress}" />
+
+				</p:selectOneMenu>
+				
+				
+
+				<p:commandButton value="#{bundle.create}" icon="ui-icon-plus"
+					action="#{deliveryMB.createDelivery_Notes()}"
+					update=":messageGrowl :deliveryForm:deliveryTable"
+					oncomplete="closeDialogIfSucess(xhr, status, args, deliveryCreateDialogWidget, 'deliveryCreateDialogId')" />
+				<p:commandButton value="#{bundle.cancel}" icon="ui-icon-cancel"
+					actionListener="#{deliveryMB.resetDelivery()}"
+					onclick="deliveryCreateDialogWidget.hide();" type="button" />
+			</h:panelGrid>
+		</h:form>
+	</p:dialog>
+</h:body>
+</html>

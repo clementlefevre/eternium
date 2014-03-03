@@ -1,0 +1,100 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+<h:body>
+	<p:dialog widgetVar="productDetailDialogWidget"
+		id="productDetailDialogId" height="auto" width="auto" modal="false"
+		closable="false" draggable="false" resizable="false">
+		<f:facet name="header"> #{bundle.product} #{bundle.detail}</f:facet>
+		<h:form id="productDetailDialogForm" prependId="false">
+			<h:panelGrid columns="4">
+				<h:outputText value="#{bundle.productNumber} :" />
+				<h:outputText
+					value="#{productMB.productWithStatusForDetail.product_infos.item_number}" />
+				<h:outputText value="#{bundle.productSerial} :" />
+				<h:outputText value="#{productMB.productWithStatusForDetail.serial}" />
+				
+				<h:outputText value="#{bundle.productDateCode} :" />
+				<h:outputText
+					value="#{productMB.productWithStatusForDetail.manufacturing_Date}" />
+
+				<h:outputText value="#{bundle.product_infos_supplier} :" />
+				<h:outputText
+					value="#{productMB.productWithStatusForDetail.product_infos.supplier_list.supplier_name}" />
+
+				<h:outputText value="#{bundle.delivery_notes_date} :" />
+				<h:outputText
+					value="#{productMB.productWithStatusForDetail.delivery_notes.delivery_date}">
+					<f:convertDateTime pattern="dd/MM/yyyy" />
+				</h:outputText>
+
+
+				<h:outputText value="#{bundle.currentStatus} :" />
+				<h:outputText
+					value="#{productMB.lastStatusOfProduct.status_name.status_name}" />
+
+
+
+			</h:panelGrid>
+
+			<p:dataTable id="productStatusTable"
+				value="#{productMB.productWithStatusForDetail.status}" var="status">
+				<f:facet name="header">#{bundle.status}</f:facet>
+
+				<p:column>
+
+
+
+					<p:commandButton icon="ui-icon-pencil"
+						update=":statusUpdateDialogForm"
+						onclick="statusUpdateDialogWidget.show();">
+						<f:setPropertyActionListener target="#{productMB.status}"
+							value="#{status}" />
+					</p:commandButton>
+					<p:commandButton icon="ui-icon-trash"
+						update=":statusDeleteDialogForm"
+						onclick="statusDeleteDialogWidget.show();">
+						<f:setPropertyActionListener target="#{productMB.status}"
+							value="#{status}" />
+					</p:commandButton>
+
+				</p:column>
+				<p:column headerText="">
+					<h:outputText value="#{status.status_id}" />
+				</p:column>
+				
+				
+				<p:column headerText="">
+					<h:outputText value="#{status.status_name.status_name}" />
+				</p:column>
+				<p:column headerText="Entry Date">
+					<h:outputText value="#{status.entryDate}">
+						<f:convertDateTime pattern="dd/MM/yyyy HH:mm:ss" />
+					</h:outputText>
+				</p:column>
+				<p:column headerText="Comment">
+					<h:outputText value="#{status.comment}" />
+				</p:column>
+
+				<p:column headerText="Loc">
+					<h:outputText
+						value="#{status.loc.train_type.train_label} - #{status.loc.train_type.train_family}" />
+				</p:column>
+			</p:dataTable>
+
+			<p:commandButton value="#{bundle.ok}" icon="ui-icon-arrow-1-w"
+				actionListener="#{productMB.resetProductWithStatusForDetail()}"
+				onclick="productDetailDialogWidget.hide();" />
+
+			<p:commandButton value="#{bundle.create} #{bundle.status}"
+				icon="ui-icon-plus" update=":statusCreateDialogForm "
+				actionListener="#{productMB.resetStatus()}"
+				onclick="statusCreateDialogWidget.show();" />
+
+		</h:form>
+	</p:dialog>
+</h:body>
+</html>

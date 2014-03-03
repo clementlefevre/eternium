@@ -1,0 +1,161 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+<ui:composition
+	template="/pages/protected/template/common/commonLayout.xhtml">
+	<ui:define name="content">
+
+		<h:form id="productsForm">
+
+			<p:dataTable id="productsTable" var="status" autoUpdate="true"
+				 scrollable="true" resizableColumns="true"
+				value="#{productMB.lazyModel}" paginator="true" rows="10"
+				paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
+				rowsPerPageTemplate="5,10,15" lazy="true">
+				<p:column headerText="Action" style="width:90px">
+
+					<p:commandButton icon="ui-icon-search"
+						onclick="productDetailDialogWidget.show();"
+						update=":productDetailDialogForm  ">
+						<f:setPropertyActionListener value="#{status.product}"
+							target="#{productMB.productWithStatusForDetail}" />
+					</p:commandButton>
+
+					<p:commandButton icon="ui-icon-pencil"
+						update=":productUpdateDialogForm"
+						onclick="productUpdateDialogWidget.show();">
+						<f:setPropertyActionListener target="#{productMB.product}"
+							value="#{status.product}" />
+					</p:commandButton>
+
+					<p:commandButton icon="ui-icon-trash"
+						update=":productDeleteDialogForm"
+						onclick="productDeleteDialogWidget.show();">
+						<f:setPropertyActionListener target="#{productMB.product}"
+							value="#{status.product}" />
+					</p:commandButton>
+				</p:column>
+
+				<!-- <p:column id="status_id" filterBy="#{status.status_id}"
+					filterMatchMode="contains" headerText="status Id">
+					<h:outputText value="#{status.status_id}" />
+				</p:column>
+
+
+
+				<p:column id="item_id" filterBy="#{status.product.item_id}"
+					filterMatchMode="contains" headerText="Item Id">
+					<h:outputText value="#{status.product.item_id}" />
+				</p:column>
+ -->
+				<p:column id="item_number" headerText="Item Number" style="width:150px"
+					filterBy="#{status.product.product_infos.item_number}"
+					filterMatchMode="contains">
+					<h:outputText value="#{status.product.product_infos.item_number}" />
+				</p:column>
+
+				<p:column id="item_name"
+					filterBy="#{status.product.product_infos.item_name}"
+					filterMatchMode="contains" headerText="Description">
+					<h:outputText value="#{status.product.product_infos.item_name}" />
+				</p:column>
+				<p:column id="serial" filterBy="#{status.product.serial}"
+					headerText="Serial">
+					<h:outputText value="#{status.product.serial}" />
+				</p:column>
+				<p:column id="filterStatusName"
+					filterOptions="#{productMB.statusOptions}"
+					filterBy="#{status.status_name.status_name}"
+					filterMatchMode="exact" headerText="Status">
+					<h:outputText value="#{status.status_name.status_name}" />
+				</p:column>
+
+
+				<p:column id="entry_date" headerText="Since">
+					<h:outputText value="#{status.entryDate}">
+						<f:convertDateTime pattern="dd/MM/yyyy" />
+					</h:outputText>
+				</p:column>
+				<p:column id="comment" filterBy="#{status.comment}"
+					filterMatchMode="contains" headerText="comment">
+					<h:outputText value="#{status.comment}" />
+				</p:column>
+
+				<p:column id="delivery_notes"
+					filterBy="#{status.product.delivery_notes.delivery_notes_name}"
+					headerText="Delivery Notes">
+					<h:outputText
+						value="#{status.product.delivery_notes.delivery_notes_name}" />
+				</p:column>
+
+				<p:column id="family_name"
+					filterOptions="#{productMB.item_familyOptions}"
+					filterMatchMode="exact"
+					filterBy="#{status.product.product_infos.item_family.family_name}"
+					headerText="Product">
+					<h:outputText
+						value="#{status.product.product_infos.item_family.family_name}" />
+				</p:column>
+
+				<p:column id="train_family"
+					filterOptions="#{productMB.train_familyOptions}"
+					filterMatchMode="exact"
+					filterBy="#{status.loc.train_type.train_family}"
+					headerText="Train Family">
+					<h:outputText value="#{status.loc.train_type.train_family}" />
+				</p:column>
+
+				<p:column id="train_label"
+					filterOptions="#{productMB.train_labelOptions}"
+					filterMatchMode="exact"
+					filterBy="#{status.loc.train_type.train_label}"
+					headerText="Train Label">
+					<h:outputText value="#{status.loc.train_type.train_label}" />
+				</p:column>
+
+
+				<p:column id="loc_serial" filterMatchMode="contains"
+					filterBy="#{status.loc.loc_serial_number}"
+					headerText="Train Serial">
+					<h:outputText value="#{status.loc.loc_serial_number}" />
+				</p:column>
+
+
+
+			</p:dataTable>
+			<p:blockUI block="productsTable" trigger="productsTable">
+        Lazy Loading<br />
+				<p:graphicImage value="/resources/img/ajax-loader.gif" />
+			</p:blockUI>
+
+		</h:form>
+		<ui:include
+			src="/pages/protected/defaultUser/dialogs/productDetailDialog.xhtml" />
+		<ui:include
+			src="/pages/protected/defaultUser/dialogs/productUpdateDialog.xhtml" />
+		<ui:include
+			src="/pages/protected/defaultUser/dialogs/productDeleteDialog.xhtml" />
+		<ui:include
+			src="/pages/protected/defaultUser/dialogs/productCreateDialog.xhtml" />
+		<ui:include
+			src="/pages/protected/defaultUser/dialogs/statusUpdateDialog.xhtml" />
+		<ui:include
+			src="/pages/protected/defaultUser/dialogs/statusCreateDialog.xhtml" />
+		<ui:include
+			src="/pages/protected/defaultUser/dialogs/statusDeleteDialog.xhtml" />
+		<ui:include
+			src="/pages/protected/defaultUser/dialogs/importProductsDialog.xhtml" />
+
+	</ui:define>
+	<h:outputScript library="javascript" name="jscodes.js" />
+	<p:blockUI block="productsForm" trigger="productsForm">
+        LOADING<br />
+		<p:graphicImage value="/resources/img/ajax-loader.gif" />
+	</p:blockUI>
+</ui:composition>
+</html>

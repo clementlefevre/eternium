@@ -1,0 +1,51 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+<h:body>
+	<p:dialog widgetVar="deliveryDetailDialogWidget"
+		id="deliveryDetailDialogId" height="80%" width="80%" modal="false" closable="true"
+		draggable="true" resizable="true">
+		<f:facet name="header"> #{bundle.delivery} #{bundle.detail}</f:facet>
+		<h:form id="deliveryDetailDialogForm" prependId="false">
+			<h:panelGrid columns="2">
+				<h:outputText value="#{bundle.delivery_notes_name} : " />
+				<h:outputText
+					value="#{deliveryMB.deliveryWithProductsForDetail.delivery_notes_name}" />
+				<h:outputText value="#{bundle.delivery_notes_date} : " />
+				<h:outputText
+					value="#{deliveryMB.deliveryWithProductsForDetail.delivery_date}">
+					<f:convertDateTime pattern="dd/MM/yyyy" dateStyle="short" />
+				</h:outputText>
+			</h:panelGrid>
+
+			<p:dataTable id="deliveryProductsTable"
+				value="#{deliveryMB.deliveryWithProductsForDetail.product}"
+				var="product" scrollable="true" scrollHeight="350">
+				<f:facet name="header">#{bundle.product}</f:facet>
+
+
+
+				<p:column headerText="Product #">
+					<h:outputText value="#{product.product_infos.item_number}" />
+				</p:column>
+				<p:column headerText="Serial #">
+					<h:outputText value="#{product.serial}" />
+				</p:column>
+				<p:column headerText="Manufacturing Date">
+					<h:outputText value="#{product.manufacturing_Date}" />
+				</p:column>
+				<p:column headerText="Quantity delivered">
+					<h:outputText value="#{product.quantity_delivered}" />
+				</p:column>
+			</p:dataTable>
+
+			<p:commandButton value="#{bundle.ok}" icon="ui-icon-arrow-1-w"
+				actionListener="#{productMB.resetProductWithStatusForDetail()}"
+				onclick="productDetailDialogWidget.hide();" />
+		</h:form>
+	</p:dialog>
+</h:body>
+</html>

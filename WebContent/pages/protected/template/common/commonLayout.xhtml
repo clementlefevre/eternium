@@ -1,0 +1,113 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+	<!-- <h:outputStylesheet library="css" name="common-style.css" /> -->
+	<h:outputStylesheet name="css/default.css" />
+	<link rel="icon" type="image/png" href="img/favico.png" />
+	<title>Eternium</title>
+</h:head>
+
+<h:body>
+
+	<f:view contentType="text/html; charset=UTF-8" encoding="UTF-8">
+		<p:layout fullPage="true" id="allLayout">
+			<p:layoutUnit id="top" position="north" size="120">
+				<ui:insert name="header">
+					<ui:include
+						src="/pages/protected/template/common/commonHeader.xhtml" />
+				</ui:insert>
+			</p:layoutUnit>
+			<ui:insert name="sidebar">
+				<p:layoutUnit id="west" position="west" size="150" header="Options">
+
+					<p:panel id="optionPanel">
+						<p:row id="opt1Panel" rendered="#{menuMB.selectedOption == 1}">
+
+							<h:form id="optionFormCreateProduct">
+								<p:commandButton value="#{bundle.create} #{bundle.product}"
+									icon="ui-icon-plus"
+									update=":productCreateDialogForm :productsForm"
+									actionListener="#{productMB.resetProduct()}"
+									onclick="productCreateDialogWidget.show();" />
+
+
+							</h:form>
+							
+							<h:form id="optionFormImportProduct">
+								<p:commandButton value="#{bundle.imPort} #{bundle.product_new}"
+									icon="ui-icon-plus"
+									update=":importProductsDialogForm"
+									actionListener="#{productMB.resetProduct()}"
+									onclick="importProductsDialogWidget.show();" />
+
+
+							</h:form>
+
+						</p:row>
+						
+								
+								<p:row id="opt2Panel" rendered="#{menuMB.selectedOption == 2}">
+
+							<h:form id="optionFormCreateLoc">
+								<p:commandButton value="#{bundle.create} #{bundle.loc}"
+									icon="ui-icon-plus"
+									update=":locCreateDialogForm :locsForm"
+									actionListener="#{locMB.resetLoc()}"
+									onclick="locCreateDialogWidget.show();" />
+
+
+							</h:form>
+								</p:row>
+								<p:row id="opt3Panel" rendered="#{menuMB.selectedOption == 3}">
+
+							<h:form id="optionFormCreateDelivery">
+								<p:commandButton value="#{bundle.create} #{bundle.delivery}"
+									icon="ui-icon-plus"
+									update=":deliveryCreateDialogForm :deliveryForm"
+									actionListener="#{deliveryMB.resetDelivery_Notes()}"
+									onclick="deliveryCreateDialogWidget.show();" />
+
+
+							</h:form>
+								</p:row>
+								<p:row id="opt4Panel" rendered="#{menuMB.selectedOption == 4}">
+
+							
+								</p:row>
+					</p:panel>
+
+				</p:layoutUnit>
+			</ui:insert>
+			<p:layoutUnit id="center" position="center">
+				<p:growl id="messageGrowl" />
+				<ui:insert name="content">
+					<ui:include
+						src="/pages/protected/template/common/commonContent.xhtml" />
+				</ui:insert>
+			</p:layoutUnit>
+
+			<p:layoutUnit id="bottom" position="south" size="30">
+				<ui:insert name="footer">
+					<ui:include
+						src="/pages/protected/template/common/commonFooter.xhtml" />
+				</ui:insert>
+			</p:layoutUnit>
+
+		</p:layout>
+		<p:dialog id="basicDialog" header="History" widgetVar="dlg1">
+			<h:outputText
+				value="Select the details icon to get the History of the product" />
+		</p:dialog>
+
+		<h:outputScript library="javascript" name="jscodes.js" />
+
+	</f:view>
+
+</h:body>
+</html>

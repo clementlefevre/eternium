@@ -1,0 +1,14 @@
+.ui-widget {
+     font-size: 12px;
+   font-family: "Arial";
+ }
+.ui-widget .ui-widget {
+    font-size: 12px;
+   font-family: "Arial";
+}
+.ui-widget, 
+.ui-widget .ui-widget {
+    font-size: 12px;
+    font-family: "Arial";
+}
+ 

@@ -1,0 +1,45 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+<h:body>
+
+
+	<p:dialog widgetVar="locUpdateDialogWidget" appendToBody="false"
+		id="locUpdateDialogId" height="150" width="auto" modal="false"
+		closable="true" draggable="false" resizable="false">
+		<h:form id="locUpdateDialogForm" prependId="false">
+
+
+			<h:outputText value="* #{bundle.loc_number}" />
+			
+			
+			<h:outputText value="#{bundle.loc_family}" style="font-weight:bold"
+				 />
+			<p:selectOneMenu id="loc_update_family" value="#{locMB.loc.train_type.train_family}"
+			
+				converter="locConverter" style="text-align:center" filter="true"
+				filterMatchMode="contains">
+
+				<f:selectItems value="#{productMB.completeLoc}" var="listLoc"
+					itemValue="#{listLoc}"
+					itemLabel="#{listLoc.train_type.train_family} #{listLoc.loc_serial_number} #{listLoc.train_type.train_label}" />
+
+
+			</p:selectOneMenu>
+
+			<p:commandButton value="#{bundle.update}" icon="ui-icon-plus"
+				actionListener="#{locMB.updateLoc()}"
+				update=":messageGrowl :locsForm:locsTable"
+				oncomplete="closeDialogIfSucess(xhr, status, args, locUpdateDialogWidget, 'locUpdateDialogId')" />
+
+			<p:commandButton value="#{bundle.cancel}" icon="ui-icon-cancel"
+				actionListener="#{locMB.resetLoc()}"
+				onclick="locUpdateDialogWidget.hide();" type="button" />
+
+		</h:form>
+	</p:dialog>
+</h:body>
+</html>

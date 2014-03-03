@@ -1,0 +1,58 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+<h:body>
+	<p:dialog widgetVar="locDetailDialogWidget" id="locDetailDialogId"
+		height="80%" width="80%" modal="false" closable="true"
+		draggable="true" resizable="true">
+		<f:facet name="header"> #{bundle.loc} #{bundle.detail}</f:facet>
+		<h:form id="locDetailDialogForm" prependId="false">
+			<h:panelGrid columns="4">
+				<h:outputText value="#{bundle.loc_number} :" />
+				<h:outputText
+					value="#{locMB.locWithProductsForDetail.train_type.train_family} -
+					 #{locMB.locWithProductsForDetail.train_type.train_label} - 
+					 #{locMB.locWithProductsForDetail.loc_serial_number}" />
+
+			</h:panelGrid>
+
+			<p:dataTable id="locProductsTable" 
+				value="#{locMB.locWithProductsForDetail.status}" width="50%"
+				var="status" scrollable="true" scrollHeight="350">
+				<f:facet name="header">#{bundle.status}</f:facet>
+
+			
+
+				<p:column id="item_number" sortBy="#{status.product.product_infos.item_number}" headerText="Product Number" >
+					<h:outputText value="#{status.product.product_infos.item_number}" />
+				</p:column>
+				<p:column headerText="Description">
+					<h:outputText value="#{status.product.product_infos.item_name}" />
+
+				</p:column>
+				<p:column headerText="Serial" >
+					<h:outputText value="#{status.product.serial}" />
+				</p:column>
+
+				<p:column headerText="Revision Code" width="20%">
+					<h:outputText value="#{status.revision_code}" />
+				</p:column>
+
+				<p:column headerText="On Loc since :">
+					<h:outputText value="#{status.entryDate}" />
+				</p:column>
+			</p:dataTable>
+
+			<p:commandButton value="#{bundle.ok}" icon="ui-icon-arrow-1-w"
+				actionListener="#{locMB.resetLocWithProductsForDetail()}"
+				onclick="locDetailDialogWidget.hide();" />
+
+			
+
+		</h:form>
+	</p:dialog>
+</h:body>
+</html>

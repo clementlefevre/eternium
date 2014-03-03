@@ -1,0 +1,93 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+<ui:composition
+	template="/pages/protected/template/common/commonLayout.xhtml">
+	<ui:define name="content">
+
+		<h:form id="deliveryForm">
+			<p:panel id="panel" header="List of Deliveries">
+				<p:dataTable id="deliveryTable" var="delivery_notes"
+					value="#{deliveryMB.allDeliveries}" rowKey="#{delivery_notes.id}"
+					filteredValue="#{deliveryMB.filteredDelivery}"
+					selection="#{deliveryMB.delivery_notes}" selectionMode="single"
+					border="1" rows="15" paginator="true" lazy="true">
+					<f:facet name="header">
+
+					</f:facet>
+					<p:column>
+						<p:commandButton icon="ui-icon-search"
+							onclick="deliveryDetailDialogWidget.show();"
+							update=":deliveryDetailDialogForm  ">
+							<f:setPropertyActionListener value="#{delivery_notes}"
+								target="#{deliveryMB.deliveryWithProductsForDetail}" />
+						</p:commandButton>
+
+						<p:commandButton icon="ui-icon-pencil"
+							update=":deliveryUpdateDialogForm"
+							onclick="deliveryUpdateDialogWidget.show();">
+							<f:setPropertyActionListener
+								target="#{deliveryMB.delivery_notes}" value="#{delivery_notes}" />
+						</p:commandButton>
+
+						<p:commandButton icon="ui-icon-trash"
+							update=":deliveryDeleteDialogForm"
+							onclick="deliveryDeleteDialogWidget.show();">
+							<f:setPropertyActionListener
+								target="#{deliveryMB.delivery_notes}" value="#{delivery_notes}" />
+						</p:commandButton>
+					</p:column>
+					<p:column id="delivery_notes_name" headerText="Delivery Notes">
+						<h:outputText value="#{delivery_notes.delivery_notes_name}" />
+					</p:column>
+					<p:column id="delivery_date" headerText="Delivered on">
+						<h:outputText value="#{delivery_notes.delivery_date}" >
+						<f:convertDateTime pattern="dd/MM/yyyy"/></h:outputText>
+					</p:column>
+
+
+					<p:column id="supplier_name" headerText="Supplier">
+						<h:outputText
+							value="#{delivery_notes.supplier_list.supplier_name}" />
+					</p:column>
+					
+					<p:column id="delivered_to" headerText="Adress of delivery">
+						<h:outputText
+							value="#{delivery_notes.delivery_list.delivery_adress}" />
+					</p:column>
+					
+					<p:column id="delivered_to_SAP" headerText="SAP delivery Code">
+						<h:outputText
+							value="#{delivery_notes.delivery_list.delivery_adress_sap_code}" />
+					</p:column>
+					
+					<!-- <p:column id="project" headerText="Project">
+						<h:outputText
+							value="#{delivery_notes.delivery_list.projects.project_name}" />
+					</p:column> -->
+
+
+
+				</p:dataTable>
+
+			</p:panel>
+
+		</h:form>
+		<ui:include
+			src="/pages/protected/defaultUser/dialogs/deliveryDetailDialog.xhtml" />
+		<ui:include
+			src="/pages/protected/defaultUser/dialogs/deliveryUpdateDialog.xhtml" />
+		<ui:include
+			src="/pages/protected/defaultUser/dialogs/deliveryDeleteDialog.xhtml" />
+			<ui:include
+			src="/pages/protected/defaultUser/dialogs/deliveryCreateDialog.xhtml" />
+	</ui:define>
+
+
+</ui:composition>
+</html>

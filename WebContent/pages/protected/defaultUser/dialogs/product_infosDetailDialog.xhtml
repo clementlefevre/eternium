@@ -1,0 +1,39 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+<h:body>
+	<p:dialog widgetVar="product_infosDetailDialogWidget"
+		id="product_infosDetailDialogId" width="500" modal="false"
+		closable="false" draggable="false" resizable="false">
+		<f:facet name="header"> #{bundle.product_infos} #{bundle.detail}</f:facet>
+		<h:form id="product_infosDetailDialogForm" prependId="false">
+			<h:panelGrid columns="2">
+
+				<h:outputText value="#{bundle.productNumber} : " />
+				<h:outputText
+					value="#{product_infosMB.product_infosForDetail.item_number}" />
+
+				<h:outputText value="#{bundle.productName} : " />
+				<h:outputText
+					value="#{product_infosMB.product_infosForDetail.item_name}" />
+				<h:outputText value="#{bundle.productGerman_name} : " />
+				<h:outputText
+					value="#{product_infosMB.product_infosForDetail.item_german_name}" />
+					
+					<h:outputText value="#{bundle.product_infos_supplier} : " />
+				<h:outputText
+					value="#{product_infosMB.product_infosForDetail.supplier_list.supplier_name}" />
+
+			</h:panelGrid>
+
+
+
+			<p:commandButton value="#{bundle.ok}" icon="ui-icon-arrow-1-w"
+				onclick="productDetailDialogWidget.hide();" />
+		</h:form>
+	</p:dialog>
+</h:body>
+</html>

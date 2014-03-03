@@ -1,0 +1,19 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core" xmlns:p="http://primefaces.org/ui">
+<h:body>
+	<p:dialog widgetVar="deliveryDeleteDialogWidget" id="deliveryDeleteDialogId" height="150" width="500" modal="false"
+		closable="true" draggable="false" resizable="false">
+		<f:facet name="header"> #{bundle.delete} #{bundle.delivery} </f:facet>
+		<h:form id="deliveryDeleteDialogForm" prependId="false">
+			#{bundle.deleteRecord}: <h:outputText value="#{deliveryMB.delivery_notes.delivery_notes_name}" /><br/><br/>
+
+			<p:commandButton value="#{bundle.delete}" icon="ui-icon-plus" action="#{deliveryMB.deleteDelivery_Notes()}"
+				update=":messageGrowl :deliveryForm:deliveryTable"
+				oncomplete="closeDialogIfSucess(xhr, status, args, deliveryDeleteDialogWidget, 'deliveryDeleteDialogId')" />
+			<p:commandButton value="#{bundle.cancel}" icon="ui-icon-cancel" actionListener="#{deliveryMB.resetDelivery_Notes()}"
+				onclick="deliveryDeleteDialogWidget.hide();" type="button" />
+		</h:form>
+	</p:dialog>
+</h:body>
+</html>

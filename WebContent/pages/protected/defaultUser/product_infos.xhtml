@@ -1,0 +1,81 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+<ui:composition
+	template="/pages/protected/template/common/commonLayout.xhtml">
+	<ui:define name="content">
+
+		<h:form id="product_infosForm">
+			<p:panel id="panel" header="List of Locs">
+				<p:dataTable id="product_infosTable" var="product_infos"
+					value="#{product_infosMB.allProduct_infos}"
+					rowKey="#{product_infos.item_infos_id}" border="1" rows="15"
+					paginator="true" lazy="false" filteredValue="#{product_infosMB.filteredProduct_infos}">
+					<f:facet name="header">
+
+					</f:facet>
+					<p:column>
+						<p:commandButton icon="ui-icon-search"
+							onclick="product_infosDetailDialogWidget.show();"
+							update=":product_infosDetailDialogForm  ">
+							<f:setPropertyActionListener value="#{product_infos}"
+								target="#{product_infosMB.product_infosForDetail}" />
+						</p:commandButton>
+						<!-- 
+						<p:commandButton icon="ui-icon-pencil"
+							update=":product_infosUpdateDialogForm"
+							onclick="product_infosUpdateDialogWidget.show();">
+							<f:setPropertyActionListener
+								target="#{product_infosMB.product_infos}" value="#{product_infos}" />
+						</p:commandButton>-->
+
+						<p:commandButton icon="ui-icon-trash"
+							update=":product_infosDeleteDialogForm"
+							onclick="product_infosDeleteDialogWidget.show();">
+							<f:setPropertyActionListener
+								target="#{product_infosMB.product_infos}"
+								value="#{product_infos}" />
+						</p:commandButton>
+					</p:column>
+
+
+					<p:column id="product_infos_number"
+						filterBy="#{product_infos.item_number}"  filterMatchMode="contains"
+						headerText="Product Number">
+						<h:outputText value="#{product_infos.item_number}" />
+					</p:column>
+					<p:column id="product_infos_name"
+						filterBy="#{product_infos.item_number}" filterMatchMode="contains" headerText="Product Name">
+						<h:outputText value="#{product_infos.item_name}" />
+					</p:column>
+
+					<p:column id="supplier"
+						filterOptions="#{product_infosMB.supplier_listOptions}"
+						filterMatchMode="exact"
+						filterBy="#{product_infos.supplier_list.supplier_name}"
+						headerText="Supplier">
+						<h:outputText value="#{product_infos.supplier_list.supplier_name}" />
+					</p:column>
+
+				</p:dataTable>
+
+			</p:panel>
+
+		</h:form>
+		<ui:include
+			src="/pages/protected/defaultUser/dialogs/product_infosDetailDialog.xhtml" />
+
+		<ui:include
+			src="/pages/protected/defaultUser/dialogs/product_infosDeleteDialog.xhtml" />
+		<ui:include
+			src="/pages/protected/defaultUser/dialogs/product_infosCreateDialog.xhtml" />
+	</ui:define>
+
+
+</ui:composition>
+</html>

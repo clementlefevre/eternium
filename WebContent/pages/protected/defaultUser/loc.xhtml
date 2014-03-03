@@ -1,0 +1,86 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+<ui:composition
+	template="/pages/protected/template/common/commonLayout.xhtml">
+	<ui:define name="content">
+
+		<h:form id="locsForm">
+			<p:panel id="panel" header="List of Locs">
+				<p:dataTable id="locsTable" var="loc"
+					value="#{locMB.allLocs}" 
+					
+					border="1" rows="15" paginator="true" lazy="false">
+					<f:facet name="header">
+
+					</f:facet>
+					<p:column>
+						<p:commandButton icon="ui-icon-search"
+							onclick="locDetailDialogWidget.show();"
+							update=":locDetailDialogForm  ">
+							<f:setPropertyActionListener value="#{loc}"
+								target="#{locMB.locWithProductsForDetail}" />
+						</p:commandButton>
+<!-- 
+						<p:commandButton icon="ui-icon-pencil"
+							update=":locUpdateDialogForm"
+							onclick="locUpdateDialogWidget.show();">
+							<f:setPropertyActionListener
+								target="#{locMB.loc}" value="#{loc}" />
+						</p:commandButton>-->
+
+						<p:commandButton icon="ui-icon-trash"
+							update=":locDeleteDialogForm"
+							onclick="locDeleteDialogWidget.show();">
+							<f:setPropertyActionListener
+								target="#{locMB.loc}" value="#{loc}" />
+						</p:commandButton> 
+					</p:column>
+					
+
+					<p:column id="loc_serial" filterBy="#{loc.loc_serial_number}"
+					filterMatchMode="contains" headerText="Loc Serial">
+						<h:outputText
+							value="#{loc.loc_serial_number}" />
+					</p:column>
+					<p:column id="train_family"
+					filterOptions="#{locMB.train_familyOptions}"
+					filterMatchMode="exact"
+					filterBy="#{loc.train_type.train_family}"
+					headerText="Train Family">
+					<h:outputText value="#{loc.train_type.train_family}" />
+				</p:column>
+
+				<p:column id="train_label"
+					filterOptions="#{locMB.train_labelOptions}"
+					filterMatchMode="exact"
+					filterBy="#{loc.train_type.train_label}"
+					headerText="Train Label">
+					<h:outputText value="#{loc.train_type.train_label}" />
+				</p:column>
+					
+
+
+				</p:dataTable>
+
+			</p:panel>
+
+		</h:form>
+		 <ui:include
+			src="/pages/protected/defaultUser/dialogs/locDetailDialog.xhtml" />
+		<!--<ui:include
+			src="/pages/protected/defaultUser/dialogs/locUpdateDialog.xhtml" />-->
+		<ui:include
+			src="/pages/protected/defaultUser/dialogs/locDeleteDialog.xhtml" /> 
+			<ui:include
+			src="/pages/protected/defaultUser/dialogs/locCreateDialog.xhtml" />
+	</ui:define>
+
+
+</ui:composition>
+</html>

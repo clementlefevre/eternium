@@ -1,0 +1,19 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core" xmlns:p="http://primefaces.org/ui">
+<h:body>
+	<p:dialog widgetVar="productDeleteDialogWidget" id="productDeleteDialogId" height="150" width="500" modal="false"
+		closable="true" draggable="false" resizable="false">
+		<f:facet name="header"> #{bundle.delete} #{bundle.product}</f:facet>
+		<h:form id="productDeleteDialogForm" prependId="false">
+			#{bundle.deleteRecord}: <h:outputText value="#{productMB.product.item_id}" /><br/><br/>
+
+			<p:commandButton value="#{bundle.delete}" icon="ui-icon-plus" action="#{productMB.deleteProduct()}"
+				update=":messageGrowl :productsForm:productsTable" ajax="false"
+				oncomplete="closeDialogIfSucess(xhr, status, args, productDeleteDialogWidget, 'productDeleteDialogId')" />
+			<p:commandButton value="#{bundle.cancel}" icon="ui-icon-cancel" actionListener="#{productMB.resetProduct()}"
+				onclick="productDeleteDialogWidget.hide();" type="button" />
+		</h:form>
+	</p:dialog>
+</h:body>
+</html>

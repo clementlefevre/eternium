@@ -1,0 +1,63 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+<h:body>
+	<p:dialog widgetVar="importProductsDialogWidget"
+		id="importProductsDialogId" height="auto" width="500" modal="false" 
+		closable="true" draggable="false" resizable="false">
+		<f:facet name="header">#{bundle.imPort} #{bundle.product} from .csv File</f:facet>
+		<h:form id="importProductsDialogForm" prependId="false">
+
+			<p:fileUpload fileUploadListener="#{productMB.upload}"
+				allowTypes="/(\.|\/)(csv)$/" sizeLimit="1000000"
+				description="Select Images"
+				update=":messageGrowl :importProductTableForm:importProductsTable" />
+
+
+		</h:form>
+		<h:form id="importProductTableForm">
+			<p:outputPanel autoUpdate="true">
+				<p:dataTable id="importProductsTable" var="importProduct"
+					value="#{productMB.mediumProductsModel}" rowKey="#{importProduct.item_id}"
+					selection="#{productMB.selectedImportedProducts}">
+					<p:ajax event="rowSelectCheckbox" listener="#{productMB.check}"   />
+					<p:column selectionMode="multiple" style="width:2%" />
+					<p:column id="importProduct_name" headerText="Description">
+						<h:outputText value="#{importProduct.product_infos.item_name}" />
+					</p:column>
+					<p:column id="importProduct_number" headerText="Part Number">
+						<h:outputText value="#{importProduct.product_infos.item_number}" />
+					</p:column>
+					<p:column id="importProduct_serial" headerText="Serial">
+						<h:outputText value="#{importProduct.serial}" />
+					</p:column>
+					<p:column id="importProduct_Delivery_notes"
+						headerText="Delivery Notes">
+						<h:outputText
+							value="#{importProduct.delivery_notes.delivery_notes_name}" />
+					</p:column>
+					<f:facet name="footer">
+						<p:commandButton id="importButton" value="Import Selected"
+							icon="ui-icon-copy " action="#{productMB.importProducts()}"
+							update=":messageGrowl :productsForm:productsTable :importProductTableForm:importProductsTable" ajax="false"
+							oncomplete="closeDialogIfSucess(xhr, status, args, importProductsDialogWidget, 'importProductsDialogId')" />
+					</f:facet>
+
+
+
+
+
+
+				</p:dataTable>
+
+
+			</p:outputPanel>
+
+		</h:form>
+
+	</p:dialog>
+</h:body>
+</html>

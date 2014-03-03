@@ -1,0 +1,63 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+<h:body>
+	<p:dialog widgetVar="product_infosCreateDialogWidget"
+		id="product_infosCreateDialogId" height="auto" width="500"
+		modal="false" closable="true" draggable="false" resizable="false">
+		<f:facet name="header">#{bundle.create} #{bundle.product_infos_new}</f:facet>
+		<h:form id="product_infosCreateDialogForm" prependId="false">
+			<h:panelGrid columns="2">
+				<h:outputText value="* #{bundle.productNumber}" />
+				<h:inputText value="#{product_infosMB.product_infos.item_number}"
+					required="true" label="#{bundle.productNumber}" />
+
+				<h:outputText value="* #{bundle.productName}" />
+				<h:inputText value="#{product_infosMB.product_infos.item_name}"
+					required="true" label="#{bundle.productName}" />
+
+				<h:outputText value="* #{bundle.productGerman_name}" />
+				<h:inputText
+					value="#{product_infosMB.product_infos.item_german_name}"
+					required="true" label="#{bundle.productGerman_name}" />
+
+
+				<h:outputText value="* #{bundle.delivery_notes_supplier}" />
+
+				<p:selectOneMenu id="create_supplier_product_infos"
+					value="#{product_infosMB.product_infos.supplier_list}"
+					converter="supplier_listConverter" style="text-align:center">
+
+					<f:selectItems value="#{product_infosMB.completeSupplier_list}"
+						var="liste" itemValue="#{liste}"
+						itemLabel="#{liste.supplier_name}" />
+
+				</p:selectOneMenu>
+
+				<h:outputText value="* #{bundle.product_infos_family}" />
+
+				<p:selectOneMenu id="create_family_product_infos"
+					value="#{product_infosMB.product_infos.item_family}"
+					converter="item_familyConverter" style="text-align:center">
+
+					<f:selectItems value="#{product_infosMB.completeItem_family}"
+						var="liste_family" itemValue="#{liste_family}"
+						itemLabel="#{liste_family.family_name}" />
+						
+						</p:selectOneMenu>
+					<p:commandButton value="#{bundle.create}" icon="ui-icon-plus"
+						action="#{product_infosMB.createProduct_infos()}"
+						update=":messageGrowl :product_infosForm:product_infosTable"
+						oncomplete="closeDialogIfSucess(xhr, status, args, product_infosCreateDialogWidget, 'product_infosCreateDialogId')" />
+
+					<p:commandButton value="#{bundle.cancel}" icon="ui-icon-cancel"
+						actionListener="#{product_infosMB.resetProduct_infos()}"
+						onclick="product_infosCreateDialogWidget.hide();" type="button" />
+			</h:panelGrid>
+		</h:form>
+	</p:dialog>
+</h:body>
+</html>

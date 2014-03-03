@@ -1,0 +1,74 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:body>
+	<p:dialog widgetVar="statusCreateDialogWidget" appendToBody="false"
+		id="statusCreateDialogId" height="auto" width="500" modal="false"
+		closable="true" draggable="false" resizable="false">
+		<f:facet name="header">#{bundle.create} #{bundle.status_new}</f:facet>
+		<h:form id="statusCreateDialogForm" prependId="false">
+			<h:panelGrid columns="2">
+
+				<h:outputText value="* #{bundle.statusName}" />
+
+
+				<p:selectOneMenu id="status_new"
+					value="#{productMB.status.status_name}"
+					converter="statusNameConverter" style="text-align:center">
+					<f:selectItem itemLabel="Choose a new Status" />
+					<f:selectItems value="#{productMB.completeStatusName}" var="liste"
+						itemValue="#{liste}" itemLabel="#{liste.status_name}" />
+					<p:ajax listener="#{productMB.createStatusCode()}"
+						update="ajaxTarget" />
+
+				</p:selectOneMenu>
+
+				<h:outputText value="* #{bundle.status_entry_date}" />
+				<p:inplace id="ajaxInplaceStatusCreate_entryDate" editor="true"
+					required="true">
+
+					<p:calendar effect="slideDown" id="new_status_entrydate"
+						value="#{productMB.status.entryDate}"
+						maxdate="#{deliveryMB.today}" pattern="MM/dd/yyyy HH:mm:ss">
+
+
+					</p:calendar>
+				</p:inplace>
+
+
+				<h:panelGroup id="ajaxTarget">
+					
+					<h:outputText value="#{bundle.loc_number}" style="font-weight:bold"
+						rendered="#{productMB.status_name_selected==2}" />
+					<p:selectOneMenu id="loc_new" value="#{productMB.status.loc}"
+						rendered="#{productMB.status_name_selected==2}"
+						converter="locConverter" style="text-align:center" filter="true"
+						filterMatchMode="contains">
+
+						<f:selectItems value="#{productMB.completeLoc}" var="listLoc"
+							itemValue="#{listLoc}"
+							itemLabel="#{listLoc.train_type.train_family} #{listLoc.loc_serial_number} #{listLoc.train_type.train_label}" />
+
+
+					</p:selectOneMenu>
+
+				</h:panelGroup>
+
+				<p:commandButton value="#{bundle.create}" icon="ui-icon-plus"
+					action="#{productMB.createStatus()}"
+					update=":messageGrowl :productDetailDialogForm:productStatusTable"
+					oncomplete="closeDialogIfSucess(xhr, status, args,statusCreateDialogWidget, 'statusCreateDialogId')">
+				</p:commandButton>
+
+				<p:commandButton value="#{bundle.cancel}" icon="ui-icon-cancel"
+					actionListener="#{productMB.resetStatus()}"
+					onclick="statusCreateDialogWidget.hide();" type="button" />
+			</h:panelGrid>
+		</h:form>
+	</p:dialog>
+</h:body>
+</html>

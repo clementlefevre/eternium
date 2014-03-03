@@ -1,0 +1,39 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+<h:body>
+
+
+	<p:dialog widgetVar="productUpdateDialogWidget" appendToBody="false"
+		id="productUpdateDialogId" height="150" width="auto" modal="false"
+		closable="true" draggable="false" resizable="false">
+		<h:form id="productUpdateDialogForm" prependId="false">
+
+
+			<h:outputText value="* #{bundle.productNumber}" />
+
+
+			<p:autoComplete forceSelection="true" minQueryLength="3"
+				value="#{productMB.product.product_infos}"
+				label="#{bundle.productNumber}" required="true" var="product_infos"
+				itemLabel="#{product_infos.item_number}"
+				itemValue="#{product_infos}"
+				completeMethod="#{productMB.completeProduct_infos}" dropdown="true" />
+		
+		
+			<p:commandButton value="#{bundle.update}" icon="ui-icon-plus"
+				actionListener="#{productMB.updateProduct()}"
+				update=":messageGrowl :productsForm:productsTable"
+				oncomplete="closeDialogIfSucess(xhr, status, args, productUpdateDialogWidget, 'productUpdateDialogId')" />
+
+			<p:commandButton value="#{bundle.cancel}" icon="ui-icon-cancel"
+				actionListener="#{productMB.resetProduct()}"
+				onclick="productUpdateDialogWidget.hide();" type="button" />
+
+		</h:form>
+	</p:dialog>
+</h:body>
+</html>

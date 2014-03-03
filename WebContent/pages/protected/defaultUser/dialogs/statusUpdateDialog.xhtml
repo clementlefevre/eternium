@@ -1,0 +1,53 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+<h:body>
+
+
+	<p:dialog widgetVar="statusUpdateDialogWidget" appendToBody="false"
+		id="statusUpdateDialogId" height="150" width="auto" modal="false"
+		closable="true" draggable="false" resizable="false">
+		<h:form id="statusUpdateDialogForm" prependId="false">
+			<h:panelGrid columns="2">
+
+				<h:outputText value="* #{bundle.statusName}" />
+
+
+				<p:selectOneMenu id="status" value="#{productMB.status.status_name}"
+					converter="statusNameConverter" style="text-align:center">
+
+					<f:selectItems value="#{productMB.completeStatusName}" var="liste"
+						itemValue="#{liste}" itemLabel="#{liste.status_name}" />
+
+
+				</p:selectOneMenu>
+
+				<h:outputText value="* #{bundle.status_entry_date}" />
+				<p:inplace id="ajaxInplaceStatusDetail_entryDate" editor="true"
+					required="true">
+
+					<p:calendar effect="slideDown" id="update_status_entrydate"
+						value="#{productMB.status.entryDate}"
+						maxdate="#{deliveryMB.today}" pattern="MM/dd/yyyy HH:mm:ss">
+						
+
+					</p:calendar>
+				</p:inplace>
+
+				<p:commandButton value="#{bundle.update}" icon="ui-icon-plus"
+					actionListener="#{productMB.updateStatus()}"
+					update=":messageGrowl :productDetailDialogForm:productStatusTable"
+					oncomplete="closeDialogIfSucess(xhr, status, args, statusUpdateDialogWidget, 'statusUpdateDialogId')" />
+
+				<p:commandButton value="#{bundle.cancel}" icon="ui-icon-cancel"
+					actionListener="#{productMB.resetStatus()}"
+					onclick="statusUpdateDialogWidget.hide();" type="button" />
+			</h:panelGrid>
+		</h:form>
+
+	</p:dialog>
+</h:body>
+</html>

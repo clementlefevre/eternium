@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<faces-config xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-facesconfig_2_2.xsd"
+	version="2.2">
+	<application>
+		<resource-bundle>
+			<base-name>messages</base-name>
+			<var>bundle</var>
+		</resource-bundle>
+		<message-bundle>messages</message-bundle>
+	</application>
+
+
+
+	<converter>
+		<converter-id>statusNameConverter</converter-id>
+		<converter-class>com.converter.StatusNameConverter</converter-class>
+	</converter>
+	<converter>
+		<converter-id>supplier_listConverter</converter-id>
+		<converter-class>com.converter.Supplier_listConverter</converter-class>
+	</converter>
+	<converter>
+		<converter-id>timestampConverter</converter-id>
+		<converter-class>com.converter.TimestampConverter</converter-class>
+	</converter>
+	<converter>
+		<converter-id>projectsConverter</converter-id>
+		<converter-class>com.converter.ProjectsConverter</converter-class>
+	</converter>
+	
+	<converter>
+		<converter-id>delivery_listConverter</converter-id>
+		<converter-class>com.converter.Delivery_listConverter</converter-class>
+	</converter>
+	
+	<converter>
+		<converter-id>locConverter</converter-id>
+		<converter-class>com.converter.LocConverter</converter-class>
+	</converter>
+	<converter>
+		<converter-id>item_familyConverter</converter-id>
+		<converter-class>com.converter.Item_familyConverter</converter-class>
+	</converter>
+	<converter>
+		<converter-id>train_typeConverter</converter-id>
+		<converter-class>com.converter.Train_typeConverter</converter-class>
+	</converter>
+
+
+</faces-config>

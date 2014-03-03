@@ -1,0 +1,42 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+<h:body>
+	<p:dialog widgetVar="locCreateDialogWidget"
+		id="locCreateDialogId" height="auto" width="500" modal="false"
+		closable="true" draggable="false" resizable="false">
+		<f:facet name="header">#{bundle.create} #{bundle.loc_new}</f:facet>
+		<h:form id="locCreateDialogForm" prependId="false">
+			<h:panelGrid columns="2">
+				<h:outputText value="* #{bundle.loc_family}" />
+				<p:selectOneMenu id="status_new"
+					value="#{locMB.loc.train_type}"
+					converter="train_typeConverter" style="text-align:center">
+					<f:selectItem itemLabel="Choose a Train Family" />
+					<f:selectItems value="#{locMB.completeTrain_type}" var="liste"
+						itemValue="#{liste}" itemLabel="#{liste.train_family}-#{liste.train_label}" />
+					
+
+				</p:selectOneMenu>
+				<h:outputText value="* #{bundle.loc_serial}" />
+				<h:inputText
+					value="#{locMB.loc.loc_serial_number}"
+					required="true" label="#{bundle.loc_serial}" />
+		
+				
+		
+				<p:commandButton value="#{bundle.create}" icon="ui-icon-plus"
+					action="#{locMB.createLoc()}"
+					update=":messageGrowl :locsForm:locsTable"
+					oncomplete="closeDialogIfSucess(xhr, status, args, locCreateDialogWidget, 'locCreateDialogId')" />
+					
+				<p:commandButton value="#{bundle.cancel}" icon="ui-icon-cancel" actionListener="#{locMB.resetLoc()}"
+					onclick="locCreateDialogWidget.hide();" type="button" />
+			</h:panelGrid>
+		</h:form>
+	</p:dialog>
+</h:body>
+</html>
